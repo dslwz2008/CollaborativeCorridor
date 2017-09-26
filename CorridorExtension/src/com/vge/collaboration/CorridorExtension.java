@@ -24,6 +24,7 @@ public class CorridorExtension extends SFSExtension {
 //    public float knowTruthProb;
     public int userNum;
     public int groupNum;
+    public List<User> enteredUsers;// 存储已进入主场景的用户
 
     // REQUESTS FROM CLIENT
     private static final String REQ_CREATEMMOITEMS = "CreateMMOItems";
@@ -46,6 +47,7 @@ public class CorridorExtension extends SFSExtension {
             mmoApi = SmartFoxServer.getInstance().getAPIManager().getMMOApi();
             userNum = Integer.parseInt(getConfigProperties().get("USER_NUM").toString());
             groupNum = Integer.parseInt(getConfigProperties().get("GROUP_NUM").toString());
+            enteredUsers = new ArrayList<>();
 
             //初始化组对象
             groups = new Group[groupNum];
