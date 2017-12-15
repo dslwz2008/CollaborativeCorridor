@@ -12,9 +12,12 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class FinishTrigger : MonoBehaviour
 {
     public MainManager manager;
+    public int exitAreaID = 0;//0:"A"; 1:"B"
+    private int groupID;
 
     void Start()
     {
+        groupID = PlayerPrefs.GetInt("GroupID");
         manager.sfs.AddEventListener(SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
     }
 
@@ -36,7 +39,7 @@ public class FinishTrigger : MonoBehaviour
             }
             case "WaitGroupMembers":
                 {
-                    manager.StatusText.text = "等待其他用户疏散完成，完成后自动跳转...";
+                    manager.StatusText.text = "等待其他用户完成，完成后自动跳转...";
                     break;
                 }
             default:
@@ -50,19 +53,24 @@ public class FinishTrigger : MonoBehaviour
         //本地用户
         if (manager.sfs.MySelf.Name == other.gameObject.name)
         {
+            //不是正确出口
+            if (groupID % 2 != exitAreaID)
+            {
+                return;
+            }
             //停止动画，原地等待
             List<UserVariable> userVariables = new List<UserVariable>();
             userVariables.Add(new SFSUserVariable("Animation", "StopRun"));
             manager.sfs.Send(new SetUserVariablesRequest(userVariables));
             other.gameObject.GetComponentInChildren<Animator>().SetBool("Run", false);
             other.gameObject.GetComponent<RigidbodyFirstPersonController>().enabled = false;
-            //发送个人逃生的时间，等待同组伙伴
+            //发送个人所用的时间，等待同组伙伴
             SendPersonalTime();
         }
-        else//远程用户，停止动画
-        {
-            other.gameObject.GetComponentInChildren<Animator>().SetBool("Run", false);
-        }
+//        else//远程用户，停止动画
+//        {
+//            other.gameObject.GetComponentInChildren<Animator>().SetBool("Run", false);
+//        }
 
     }
 
