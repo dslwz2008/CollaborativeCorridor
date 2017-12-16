@@ -299,7 +299,7 @@ MonoBehaviour:
   GameHost: 119.23.128.14
   TcpPort: 9933
   ZoneName: BasicExamples
-  RoomName: Evacuation
+  RoomName: Corridor
   UsernameText: {fileID: 300258348}
   GroupIdText: {fileID: 655667718}
   GroupSizeText: {fileID: 2122070981}

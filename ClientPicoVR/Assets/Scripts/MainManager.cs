@@ -33,8 +33,6 @@ public class MainManager : MonoBehaviour
     public int CountDownTime = 10;
     public Text StatusText;
     public Text TruthText;
-    public GameObject BarrierAB;
-    public GameObject BarrierCD;
     public Text NetworkLagText;
 
     // Data
@@ -87,6 +85,7 @@ public class MainManager : MonoBehaviour
 
     private void FillUI()
     {
+        Debug.Log("FillUI");
         GameObject UiCanvas = Utilities.GetChildObjectWithName(localPlayerController.Head, "Canvas");
         foreach (Transform child in UiCanvas.transform)
         {
@@ -126,25 +125,19 @@ public class MainManager : MonoBehaviour
         GroupFlag.material.SetColor("_Color1out", color);
         GroupSizeText.text = groupSize.ToString();
         RoleText.text = leader == 1 ? RoleLeader : RoleGroupMemeber;
-        int rightExit = PlayerPrefs.GetInt("RightExit");
-        //AB出口逃生
-        if (rightExit == 0)
+        int groupID = PlayerPrefs.GetInt("GroupID");
+        //目标出口
+        if (groupID % 2 == 0) // 从B走到A
         {
-            BarrierAB.SetActive(false);
-            RightExitString = "AB";
-            WrongExitString = "CD";
+            RightExitString = "A";
+            WrongExitString = "B";
         }
-        else
+        else // 相反
         {
-            BarrierCD.SetActive(false);
-            RightExitString = "CD";
-            WrongExitString = "AB";
+            RightExitString = "B";
+            WrongExitString = "A";
         }
-        if (PlayerPrefs.GetInt("KnowTruth") == 1)
-        {
-            TruthText.enabled = true;
-            TruthText.text = string.Format("地铁{0}出口着火，请从{1}出口逃生！", WrongExitString, RightExitString);
-        }
+        TruthText.text = string.Format("目标：请从{0}口走到{1}口", WrongExitString, RightExitString);
     }
 
     void FixedUpdate()
@@ -261,6 +254,7 @@ public class MainManager : MonoBehaviour
             }
             case "AllEntered":
             {
+                Debug.Log("AllEntered");
                 // 开始倒计时
                 timer = GetComponent<Timer>();
                 timer.stopAtZero = true;
@@ -276,6 +270,7 @@ public class MainManager : MonoBehaviour
 
     private void Timer_OnCountDownTimerFinished()
     {
+        Debug.Log("Enter Timer_OnCountDownTimerFinished");
         WaitSecondsText.enabled = false;
         WaitCountDownText.enabled = false;
 
@@ -292,6 +287,7 @@ public class MainManager : MonoBehaviour
         timer.stopAtZero = false;
         timer.StartTimer(TotalTime);
         timer.OnTimerTicked += () => CountDownText.text = timer.timeLeft.ToString("F0");
+        Debug.Log("Exit Timer_OnCountDownTimerFinished");
     }
 
     /**
@@ -429,6 +425,7 @@ public class MainManager : MonoBehaviour
 	//----------------------------------------------------------
 	private void SpawnLocalPlayer()
 	{
+        Debug.Log("SpawnLocalPlayer");
         //取本地数据
         string username = PlayerPrefs.GetString("Username");
         int groupID = PlayerPrefs.GetInt("GroupID");

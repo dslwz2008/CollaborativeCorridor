@@ -11,7 +11,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: VGE@RADI
-  productName: "\u534F\u540C\u865A\u62DF\u758F\u6563\u6F14\u7EC3"
+  productName: CollaborativeCorridor
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21176471, a: 1}
@@ -136,7 +136,7 @@ PlayerSettings:
   protectGraphicsMemory: 0
   useHDRDisplay: 0
   applicationIdentifier:
-    Android: com.vge.cvex
+    Android: com.vge.corridor
     Standalone: unity.gotoAndPlay().SFS2X MMORoomDemo example
     Tizen: com.Company.ProductName
     iOS: com.Company.ProductName

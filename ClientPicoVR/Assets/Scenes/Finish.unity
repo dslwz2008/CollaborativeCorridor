@@ -1228,7 +1228,7 @@ MonoBehaviour:
   StatusLogfileText: {fileID: 208311453}
   QuitButton: {fileID: 1589623182}
   serverIP: 119.23.128.14
-  port: 9931
+  port: 9934
   uploadResultPath: /updateResults
   uploadLogfilePath: /uploadLogfile
 --- !u!1 &1869092278
